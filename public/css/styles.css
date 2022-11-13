@@ -1,5 +1,5 @@
 *{
-    color:white
+    color:white;
 }
 
 body{
@@ -31,7 +31,7 @@ body{
 }
 
 input{
-    margin: 5px 0 15px;
+    margin: 10px 0 15px;
     background-color: #ffffff;
     color: #03152f;
     width: 55vw;
@@ -40,7 +40,7 @@ input{
 }
 
 h1{
-    margin: 50px 0 30px;
+    margin: 50px 0 20px;
 }
 
 h3{
