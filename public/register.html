@@ -12,19 +12,35 @@
         <h1>Job browser</h1>
         <h3>Register</h3>
         <form action="/user/reqister" method="post">
-            <label>User name:</label><br>
-            <input type="text" name="name" id="userName" required><br>        
-            <label>Email:</label><br>
-            <input type="text" name="email" id="email" required><br>
-            <label>Password:</label><br>
-            <input type="password"  name="password" id="password" required><br>
-            <label>Repeat password:</label><br>
-            <input type="password"  id="secondPassword" required><br>
+            <div class="input-containers">
+                <label>User name:</label><br>
+                <input type="text" name="name" id="nameInput" required  authocomplete="off"><br>    
+                <span  class="register-comments"><p id="nameComment">(Min 2 characters)</p></span> 
+            </div>
+            <div class="input-containers">
+                <label>Email:</label><br>
+                <input type="text" name="email" id="email" authocomplete="off" required><br>
+                <span class="register-comments"><p id="emailComment">(Provide correct email)</p></span> 
+            </div>
+            <div class="input-containers">
+                <label>Password:</label><br>
+                <input type="password"  name="password" id="password" required><br>
+                <span class="register-comments"><p id="passwordComment">(8 characters; 1 uper & lowercase, special character, number)</p></span> 
+            </div>
+            <div class="input-containers">
+                <label>Repeat password:</label><br>
+                <input type="password"  id="secondPassword" required><br>
+                <span class="register-comments"><p id="secondPasswordComment">(Provided password should match first password)</p></span> 
+            </div><br>
+
             <button id="submitButton" styles="buttons">Register</button>          
+
         </form>
         <span><p><a href="index.html">Login</a></p></span>
         <span><p>Forget password</p></span>
     </div>
+
     
+    <script src="/js/loginAndRegister.js"></script>
 </body>
 </html>

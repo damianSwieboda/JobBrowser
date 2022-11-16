@@ -10,8 +10,9 @@ router.post('/user/login', (req, res)=>{
 router.post('/user/reqister', async (req, res)=>{
     try{
         const user = new User(req.body)
+        const token = await user.generateAuthToken()
         await user.save()
-        res.send(user)
+        res.redirect('index.html', { user, token })
     } catch(error){
         res.status(500).send(error.message)
     }
