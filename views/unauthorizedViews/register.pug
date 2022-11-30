@@ -1,20 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="./css/styles.css"/>
-</head>
-<body>
-    <div id="container">
-        <h1>Job browser</h1>
-        <h3>Register</h3>
-        <form action="/user/reqister" method="post">
-            <div class="input-containers">
-                <label>User name:</label><br>
-                <input type="text" name="name" id="nameInput" required  authocomplete="off"><br>    
+extends layout.pug
+extends unauthorizedNavigation.pug 
+
+block content
+  form(action="/user/reqister" method="post")
+    div(class="input-containers")
+      label="User name"
+      input(type="text" name="name" id="nameInput" required authocomplete="off")
+      span(class="register-comments")
+    
+
+    label="Password"
+    input(type="password" name="password" id="password" required)     
+    button(id="submitButton" styles="buttons")="Login"
+
+
+
+<form action="/user/reqister" method="post">
+            //- <div class="input-containers">
+            //-     <label>User name:</label><br>
+            //-     <input type="text" name="name" id="nameInput" required  authocomplete="off"><br>    
                 <span  class="register-comments"><p id="nameComment">(Min 2 characters)</p></span> 
             </div>
             <div class="input-containers">
@@ -32,15 +36,3 @@
                 <input type="password"  id="secondPassword" required><br>
                 <span class="register-comments"><p id="secondPasswordComment">(Provided password should match first password)</p></span> 
             </div><br>
-
-            <button id="submitButton" styles="buttons">Register</button>          
-
-        </form>
-        <span><p><a href="index.html">Login</a></p></span>
-        <span><p>Forget password</p></span>
-    </div>
-
-    
-    <script src="/js/loginAndRegister.js"></script>
-</body>
-</html>
