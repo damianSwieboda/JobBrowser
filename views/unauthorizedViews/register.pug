@@ -1,38 +1,45 @@
-extends layout.pug
-extends unauthorizedNavigation.pug 
+extends ../layout.pug
 
 block content
-  form(action="/user/reqister" method="post")
-    div(class="input-containers")
-      label="User name"
-      input(type="text" name="name" id="nameInput" required authocomplete="off")
-      span(class="register-comments")
-    
+  #container
+    h2=title
+    form(action="/user/reqister" method="post")
+      div(class="input-containers")
+        label User name
+        br
+        input#nameInput(type="text" name="name" required authocomplete="off")
+        br
+        span(class="register-comments")
+          p#nameComment Min 2 characters
 
-    label="Password"
-    input(type="password" name="password" id="password" required)     
-    button(id="submitButton" styles="buttons")="Login"
+      div(class="input-containers")
+        label Email
+        br
+        input#email(type="text" name="email" required authocomplete="off")
+        br
+        span(class="register-comments")
+          p#emailComment Provide correct email
 
+      div(class="input-containers")
+        label Password
+        br
+        input#password(type="password"  name="password" required authocomplete="off")
+        br
+        span(class="register-comments")
+          p#passwordComment 8 characters; 1 uper and lowercase, special character, number
 
-
-<form action="/user/reqister" method="post">
-            //- <div class="input-containers">
-            //-     <label>User name:</label><br>
-            //-     <input type="text" name="name" id="nameInput" required  authocomplete="off"><br>    
-                <span  class="register-comments"><p id="nameComment">(Min 2 characters)</p></span> 
-            </div>
-            <div class="input-containers">
-                <label>Email:</label><br>
-                <input type="text" name="email" id="email" authocomplete="off" required><br>
-                <span class="register-comments"><p id="emailComment">(Provide correct email)</p></span> 
-            </div>
-            <div class="input-containers">
-                <label>Password:</label><br>
-                <input type="password"  name="password" id="password" required><br>
-                <span class="register-comments"><p id="passwordComment">(8 characters; 1 uper & lowercase, special character, number)</p></span> 
-            </div>
-            <div class="input-containers">
-                <label>Repeat password:</label><br>
-                <input type="password"  id="secondPassword" required><br>
-                <span class="register-comments"><p id="secondPasswordComment">(Provided password should match first password)</p></span> 
-            </div><br>
+      div(class="input-containers")
+        label Password
+        br
+        input#password(type="password"  name="password" required authocomplete="off")
+        span(class="register-comments")
+          p#passwordComment 8 characters; 1 uper and lowercase, special character, number
+        br
+        
+        button#submitButton(styles="buttons") Login
+    span
+      p
+        a(href='/') Login
+    span
+      p 
+        a(href='/forgetPassword.pug') Forget password

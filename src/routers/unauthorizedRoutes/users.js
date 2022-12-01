@@ -6,9 +6,9 @@ router.get('/', (req, res)=>{
     res.render('unauthorizedViews/login', {title:"Login"})
 })
 
-router.post('/user/login', (req, res)=>{
+router.get('/register', (req, res)=>{
     console.log(req.body)
-    res.json('Check mail box')
+    res.render('unauthorizedViews/register', {title:"Register"})
 })
 
 router.post('/user/reqister', async (req, res)=>{

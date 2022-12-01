@@ -1,3 +1,7 @@
+mixin item(title, url)
+  li
+    a(href=url class=path == url ? 'active' : '')=title 
+
 doctype html
 html(lang='en')
   head
@@ -9,5 +13,20 @@ html(lang='en')
   body
     h1='Job browser'
     
+    -if (title=='Login' || title=='Register' || title=='Forget password')
+      nav
+        ul
+          +item('About', '/about')
+          +item('login', '/login')
+          +item('register', '/register')
+    -else 
+      nav
+        ul
+          +item('About', '/about')
+          +item('Browse', '/browse')
+          +item('Saved', '/saved')
+          +item('Data', '/data')
+          +item('Account', '/account')
+           
     block content
 
