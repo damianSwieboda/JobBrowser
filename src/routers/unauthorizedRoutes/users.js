@@ -7,7 +7,7 @@ router.get('/', (req, res)=>{
 })
 
 router.get('/register', (req, res)=>{
-    console.log(req.body)
+    // console.log(req.body)
     res.render('unauthorizedViews/register', {title:"Register"})
 })
 
@@ -15,15 +15,41 @@ router.post('/user/reqister', async (req, res)=>{
     try{
         const user = new User(req.body)
         const token = await user.generateAuthToken()
+        await user.save()
+
         const cookie = `token=${token}; samesite=lax; path=/ ;secure`
         const cookie2 = `refreshToken=${token}; samesite=lax; path=/ ;secure`
 
-        await user.save()        
         res.setHeader("set-cookie", [cookie, cookie2])
-        res.redirect('/index.html')
+        res.render('unauthorizedViews/login', {title:"Login"})
     } catch(error){
-        res.status(500).redirect('/register.html')
-    }
+        if(error.name === 'ValidationError'){
+            let errors = {}
+
+            Object.keys(error.errors).forEach((key)=>{
+                errors[key] = error.errors[key].message
+            })
+            return res.status(400).send(errors)
+        }
+        
+        res.status(500).send();
+      }
 })
 
 module.exports = router
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

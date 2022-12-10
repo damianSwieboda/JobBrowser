@@ -1,21 +1,25 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt');
 
 
-const passwordValidationMessage = 'Provide minimum: 8 characters with atleast 1 uppercase, 1 lowercase, 1 number and 1 alphanumeric character'
+
+const passwordValidationMessage = 'Minimum eight characters, at least one letter, one number and one special character'
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}/
 
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
         trim: true,
-        required: true,
-        minLength: 2,
+        required: [true, "Provide minimum 2 characters"],
+        minLength: [2, "Provide minimum 2 characters"]
     },
     email:{
         type: String,
         trim: true,
         required: true,
+        unique:[true, 'Provided email is already in use'],
         validate (value){
             if(!validator.isEmail(value)){
                 throw new Error('Provide correct email')
@@ -26,11 +30,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true,
         required: true,
-        minLength:[ 8, passwordValidationMessage],
-        uppercase: [true, passwordValidationMessage],
-        lowercase: [true, passwordValidationMessage],
-        number: [true, passwordValidationMessage],
-        nonalpha: [true, passwordValidationMessage] 
+        minLength:[8, passwordValidationMessage],
+        validate(password){
+            if(!password.match(passwordRegex)){
+                throw new Error(passwordValidationMessage)
+            }
+        }
     },
     tokens: [{
         token:{
@@ -46,10 +51,18 @@ userSchema.methods.generateAuthToken = async function(){
     
     user.tokens = user.tokens.concat({ token })
     
-    await user.save()
     return token
 }
 
+userSchema.pre('save', async function(next){
+    const user = this
+    
+    if (this.isModified('password')) {
+        user.password = await bcrypt.hash(user.password, 8)
+    }
+
+    next()
+})
 const User = mongoose.model('User', userSchema)
 
 module.exports = User

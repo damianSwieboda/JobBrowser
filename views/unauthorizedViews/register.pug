@@ -7,7 +7,7 @@ block content
       div(class="input-containers")
         label User name
         br
-        input#nameInput(type="text" name="name" required authocomplete="off")
+        input#nameInput(type="text" name="name" required authocomplete="off" style=`background-color:${nameInputColor};`)
         br
         span(class="register-comments")
           p#nameComment Min 2 characters
@@ -15,7 +15,7 @@ block content
       div(class="input-containers")
         label Email
         br
-        input#email(type="text" name="email" required authocomplete="off")
+        input#email(type="text" name="email" required authocomplete="off" style=`background-color:${emailInputColor};`)
         br
         span(class="register-comments")
           p#emailComment Provide correct email
@@ -23,7 +23,7 @@ block content
       div(class="input-containers")
         label Password
         br
-        input#password(type="password"  name="password" required authocomplete="off")
+        input#password(type="password"  name="password" required authocomplete="off" style=`background-color:${passwordInputColor};`)
         br
         span(class="register-comments")
           p#passwordComment 8 characters; 1 uper and lowercase, special character, number
@@ -31,9 +31,9 @@ block content
       div(class="input-containers")
         label Password
         br
-        input#password(type="password"  name="password" required authocomplete="off")
+        input#secondPassword(type="password"  name="secondPassword" required authocomplete="off" style=`background-color:${secondPasswordInputColor};`)
         span(class="register-comments")
-          p#passwordComment 8 characters; 1 uper and lowercase, special character, number
+          p#secondPasswordComment Provided password should match first password
         br
         
         button#submitButton(styles="buttons") Login
@@ -43,3 +43,8 @@ block content
     span
       p 
         a(href='/forgetPassword.pug') Forget password
+
+  script(src='/js/displayAuthenticationErrors.js')    
+
+      
+  
