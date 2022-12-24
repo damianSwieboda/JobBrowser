@@ -5,15 +5,15 @@ const bcrypt = require('bcrypt');
 
 
 
-const passwordValidationMessage = 'Minimum eight characters, at least one letter, one number and one special character'
+const passwordValidationMessage = 'Password require min. 8 characters, at least one letter, number and special character'
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}/
 
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
         trim: true,
-        required: [true, "Provide minimum 2 characters"],
-        minLength: [2, "Provide minimum 2 characters"]
+        required: [true, "Name must be at least two characters"],
+        minLength: [2, "Name must be at least two characters"]
     },
     email:{
         type: String,
@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
         unique:[true, 'Provided email is already in use'],
         validate (value){
             if(!validator.isEmail(value)){
-                throw new Error('Provide correct email')
+                throw new Error('Incorrect email')
             }
         }
     },

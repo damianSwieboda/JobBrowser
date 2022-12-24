@@ -14,12 +14,12 @@ html(lang='en')
   body
     h1='Job browser'
     
-    -if (title=='Login' || title=='Register' || title=='Forget password')
+    -if (title=='Login' || title=='Sign in' || title=='Forget password')
       nav
         ul
           +item('About', '/about')
-          +item('login', '/login')
-          +item('register', '/register')
+          +item('Login', '/')
+          +item('Sign in', '/register')
     -else 
       nav
         ul
@@ -31,5 +31,4 @@ html(lang='en')
 
     block content
     script(src='/js/loginAndRegister.js')
-
 
