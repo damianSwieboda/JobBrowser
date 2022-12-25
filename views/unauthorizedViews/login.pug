@@ -4,7 +4,7 @@ include unauthorizedNavigation
 block content
   #container
       h2=title
-      form(action='/user/login' method='post')
+      form(action='/login' method='post')
         label Email
         br
         input#email(type='text' name='email' required)
@@ -13,6 +13,12 @@ block content
         br
         input#password(type='password' name='password' required)     
         br
+        div
+        - const values = messages || [];
+        -if(values.length)
+          ul#loginFeedbackList(style=`border: 1px solid ${border}; background-color:${background};`)
+            each val in values
+              li= val
         button#submitButton(styles='buttons')='Login'
       span
         p
@@ -20,10 +26,5 @@ block content
       span
         p 
           a(href='/forgetPassword.pug') Forget password
-      div
-        - const values = errorMessages || [];
-        -if(values.length)
-          ul#errorContainer
-            each val in values
-              li= val
+
   script(src='/js/logInValidation.js')

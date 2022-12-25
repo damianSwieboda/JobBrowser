@@ -35,18 +35,29 @@ nav ul li{
     background-color: #0c3676;
     border-radius: 35px;
     padding: 5px 18px;
-    margin: 35px 0 0;
+    margin: 10px 0 0;
     font-weight: bolder;
 }
 
-#errorContainer {
+/* #loginFeedbackList{    
+    list-style-type: none;
+    background-color: #84ff84;
+    border: 1px solid green;
+    margin: 10px 0 0 0;
+} */
+#loginFeedbackList li {
+    color:black;
+    width: auto;
+    margin: 3px 0;
+}
+
+#signInFeedbackList{
     list-style-type: none;
     background-color: #ff6969;
     border: 1px solid red;
     margin: 0 10px;
-
 }
-#errorContainer li {
+#signInFeedbackList li {
     color:black;
     width: auto;
     margin: 3px 0;

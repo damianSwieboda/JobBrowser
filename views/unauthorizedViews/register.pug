@@ -3,7 +3,7 @@ extends ../layout.pug
 block content
   #container
     h2=title
-    form(action="/user/reqister" method="post")
+    form(action="/reqister" method="post")
       div(class="input-containers")
         label User name
         br
@@ -39,9 +39,9 @@ block content
         
         button#submitButton(styles="buttons") Login
     div
-      - const values = errorMessages || [];
+      - const values = messages || [];
       -if(values.length)
-        ul#errorContainer
+        ul#signInFeedbackList
           each val in values
             li= val
     span
