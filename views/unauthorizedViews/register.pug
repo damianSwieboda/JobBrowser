@@ -1,6 +1,5 @@
 extends ../layout.pug
 
-
 block content
   #container
     h2=title
@@ -39,7 +38,7 @@ block content
         br
         
         button#submitButton(styles="buttons") Login
-    div#errorMessagesContainer
+    div
       - const values = errorMessages || [];
       -if(values.length)
         ul#errorContainer
@@ -50,8 +49,5 @@ block content
         a(href='/forgetPassword.pug') Forget password
         
 
-  script(src='/js/registrationInputHints.js')
-  script(src='/js/registrationClientSideValidation.js')    
-
-      
-  
+  script(src='/js/signInInputHints.js')
+  script(src='/js/signInValidation.js')

@@ -6,11 +6,7 @@ let isRepeatedPasswordValid = false
 submitButton.setAttribute('disabled', true)
 
 document.addEventListener('input', ()=>{
-    if(isNameValid && isEmailValid && isPasswordValid) {
-        submitButton.removeAttribute('disabled')
-    } else {
-        submitButton.setAttribute('disabled', true)
-    }
+    switchOffAndOnFormButton()
     
     validateName(nameInput.value)
     validateEmail(emailInput.value)
@@ -18,6 +14,18 @@ document.addEventListener('input', ()=>{
     repeatedPasswordValidation(passwordInput.value, repeatedPasswordInput.value)
 })
 
+document.addEventListener('click', ()=>{
+    switchOffAndOnFormButton()    
+})
+
+function switchOffAndOnFormButton() {
+    if(isNameValid && isEmailValid && isPasswordValid && isRepeatedPasswordValid) {
+        submitButton.removeAttribute('disabled')
+        console.log('removed')
+    } else {
+        submitButton.setAttribute('disabled', true)
+    }
+}
 
 function validateName(nameValue) {
     if(nameValue.trim().length >= 2){

@@ -1,6 +1,5 @@
 function generateErrorObjectToRenderForPUG(error){
     const registerErrorObject = {
-        title: 'Sign in',
         errorMessages: [],
     }
 

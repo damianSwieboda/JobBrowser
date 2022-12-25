@@ -30,6 +30,7 @@ function displayErrorComment(input, inputComment, isError){
         input.style.border= '2px solid red'
     } else {
         input.style.border= '0px'
+        inputComment.style.color = 'white'
 
     }
 }

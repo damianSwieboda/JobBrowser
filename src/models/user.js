@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true,
         required: true,
-        unique:[true, 'Provided email is already in use'],
+        unique: true,
         validate (value){
             if(!validator.isEmail(value)){
                 throw new Error('Incorrect email')
@@ -44,6 +44,11 @@ const userSchema = new mongoose.Schema({
         }
     }]
 })
+
+userSchema.path('email').validate(async function(email){
+    const emailCount = await User.count({ email })
+    return !emailCount
+}, 'Provided email is already in use')
 
 userSchema.methods.generateAuthToken = async function(){
     const user = this

@@ -20,3 +20,10 @@ block content
       span
         p 
           a(href='/forgetPassword.pug') Forget password
+      div
+        - const values = errorMessages || [];
+        -if(values.length)
+          ul#errorContainer
+            each val in values
+              li= val
+  script(src='/js/logInValidation.js')
