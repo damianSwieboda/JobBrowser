@@ -4,6 +4,7 @@ const app = express()
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const userRouter = require('./routers/users')
+const jobOffersRouter = require('./routers/jobs')
 
 require('./db/mongo')
 const port = process.env.PORT || 3000
@@ -16,10 +17,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser());
 
-
-
 app.use(userRouter)
- 
+app.use(jobOffersRouter) 
 app.listen(port, ()=>{
     console.log(`App listen on port ${port}`)
 })

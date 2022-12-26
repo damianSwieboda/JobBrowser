@@ -14,16 +14,21 @@ function generateErrorFeedback(error){
     return signInFeedback
 }
 
+
 const signInSuccesfulFeedback = {
     messages: ['Succesfully Sign in!'],
     border: 'green',
     background: '#84ff84'
 }
 
-const logInErrorFeedback = {
-    messages: ['Wrong email, or password'],
-    border: 'red',
-    background: '#ff6969'
+
+const logInErrorFeedback = (message) => {
+    return {
+        messages: [message],
+        border: 'red',
+        background: '#ff6969'
+    
+    }
 
 }
 

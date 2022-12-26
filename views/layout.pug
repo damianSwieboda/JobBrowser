@@ -14,7 +14,7 @@ html(lang='en')
   body
     h1='Job browser'
     
-    -if (title=='Log in' || title=='Sign in' || title=='Forget password' || title=='About')
+    -if (isUnauthorizedView == true)
       nav
         ul
           +item('About', '/about')
@@ -26,7 +26,7 @@ html(lang='en')
           +item('About', '/about')
           +item('Browse', '/browse')
           +item('Saved', '/saved')
-          +item('Data', '/data')
+          +item('Omitted', '/omitted')
           +item('Account', '/account')
 
     block content
