@@ -1,5 +1,4 @@
 extends ../layout.pug
-include unauthorizedNavigation 
 
 block content
   #container
@@ -7,7 +6,7 @@ block content
       form(action='/login' method='post')
         label Email
         br
-        input#email(type='text' name='email' required)
+        input#email(type='text' value=alredyProvidedEmail name='email' required)
         br
         label Password
         br

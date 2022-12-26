@@ -1,8 +1,8 @@
 const express = require('express')
 const { default: mongoose } = require('mongoose')
 const router = new express.Router()
-const User = require('../../models/user')
-const { generateErrorFeedback, signInSuccesfulFeedback, logInErrorFeedback }= require('./helpers/generateFeedbackObject')
+const User = require('../models/user')
+const { generateErrorFeedback, signInSuccesfulFeedback, logInErrorFeedback } = require('./helpers/generateFeedbackObject')
 
 router.get('/', (req, res)=>{
     res.render('unauthorizedViews/login', {title:"Log in"})
@@ -42,15 +42,19 @@ router.post('/login', async (req, res)=>{
         const cookie2 = `refreshToken=${token}; samesite=lax; path=/ ;secure`
         res.setHeader("set-cookie", [cookie, cookie2])
         
-        res.render('authorizedViews/')
+        res.render('authorizedViews/browse')
     } catch(error){
         if(error.name === 'Authentication error'){
-            return res.render('unauthorizedViews/login', {title:"Log in", ...logInErrorFeedback})
+            return res.status(400).render('unauthorizedViews/login', {title:"Log in", alredyProvidedEmail: req.body.email,...logInErrorFeedback})
         }
 
         res.status(500).send()
     }
 
+})
+
+router.get('/about', (req, res)=>{
+    res.render('about', {title:'About'})
 })
 module.exports = router
 

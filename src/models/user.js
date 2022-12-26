@@ -64,16 +64,16 @@ userSchema.statics.findByCredentials = async function(email, password){
 
     const error =  new Error('')
     error.name = 'Authentication error'
-    console.log(typeof error)
 
     if(!user){
         throw error
     }
-    console.log(user)
+
     const isPasswordMatch = await bcrypt.compare(password, user.password)
     if(!isPasswordMatch){
         throw error
     }
+
     return user
 }
 

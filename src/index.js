@@ -3,7 +3,7 @@ const app = express()
 
 const path = require('path')
 const cookieParser = require('cookie-parser')
-const userRouter = require('./routers/unauthorizedRoutes/users')
+const userRouter = require('./routers/users')
 
 require('./db/mongo')
 const port = process.env.PORT || 3000
