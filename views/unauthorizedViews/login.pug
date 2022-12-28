@@ -6,16 +6,18 @@ block content
       form(action='/login' method='post')
         label Email
         br
-        input#email(type='text' value=alredyProvidedEmail name='email' required)
+        div(class="input-containers")
+          input#email(type='text' value=email name='email' required)
         br
         label Password
         br
-        input#password(type='password' name='password' required)     
+        div(class="input-containers")
+          input#password(type='password' name='password' required)     
         br
         div
         - const values = messages || [];
         -if(values.length)
-          ul#loginFeedbackList(style=`border: 1px solid ${border}; background-color:${background};`)
+          ul#loginFeedbackList(style=style)
             each val in values
               li= val
         button#submitButton(styles='buttons')='Login'

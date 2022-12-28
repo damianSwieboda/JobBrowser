@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
+const { AuthError } = require('../routers/helpers/applicationError')
 
 
 
@@ -45,33 +46,25 @@ const userSchema = new mongoose.Schema({
     }]
 })
 
-userSchema.path('email').validate(async function(email){
-    const emailCount = await User.count({ email })
-    return !emailCount
-}, 'Provided email is already in use')
-
 userSchema.methods.generateAuthToken = async function(){
     const user = this
     const token = jwt.sign({_id: user._id.toString()}, process.env.JWT_SECRET)
     
     user.tokens = user.tokens.concat({ token })
-    
+    user.save()
     return token
 }
 
 userSchema.statics.findByCredentials = async function(email, password){
     const user = await User.findOne({ email })
 
-    const error =  new Error('')
-    error.name = 'Authentication error'
-
     if(!user){
-        throw error
+        throw new AuthError('Wrong email, or password', 401)
     }
 
     const isPasswordMatch = await bcrypt.compare(password, user.password)
     if(!isPasswordMatch){
-        throw error
+        throw new AuthError('Wrong email, or password', 401)
     }
 
     return user

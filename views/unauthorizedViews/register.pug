@@ -3,11 +3,11 @@ extends ../layout.pug
 block content
   #container
     h2 Sign in
-    form(action="/reqister" method="post")
+    form(action="/register" method="post")
       div(class="input-containers")
         label User name
         br
-        input#nameInput(type="text" name="name" required authocomplete="off" value=alredyProvidedName style=`border: 2px solid ${nameInputBackgroundColor};`)
+        input#nameInput(type="text" name="name" required authocomplete="off" value=providedName style=`border: 2px solid ${nameInputBackgroundColor};`)
         br
         span(class="register-comments")
           p#nameComment Min 2 characters
@@ -15,7 +15,7 @@ block content
       div(class="input-containers")
         label Email
         br
-        input#emailInput(type="text" name="email" required authocomplete="off" value=alredyProvidedEmail style=`border: 2px solid ${emailInputBackgroundColor};`)
+        input#emailInput(type="text" name="email" required authocomplete="off" value=providedEmail style=`border: 2px solid ${emailInputBackgroundColor};`)
         br
         span(class="register-comments")
           p#emailComment Provide correct email
@@ -41,7 +41,7 @@ block content
     div
       - const values = messages || [];
       -if(values.length)
-        ul#signInFeedbackList
+        ul#signInFeedbackList(style=`${style}`)
           each val in values
             li= val
     span
