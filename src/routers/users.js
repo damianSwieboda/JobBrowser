@@ -28,8 +28,6 @@ router.post('/register', async (req, res)=>{
     }
 })
 
-
-
 router.post('/login', async (req, res)=>{
     try{
         const user = await User.findByCredentials(req.body.email, req.body.password)

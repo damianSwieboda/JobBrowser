@@ -29,8 +29,8 @@ function displayErrorComment(input, inputComment, isError){
         inputComment.style.color = 'red'
         input.style.border= '2px solid red'
     } else {
-        input.style.border= '0px'
-        inputComment.style.color = 'white'
+        input.style.border= '1px solid rgb(108, 108, 108)'
+        inputComment.style.color = 'rgb(184, 184, 184)'
 
     }
 }

@@ -7,25 +7,28 @@ block content
         label Email
         br
         div(class="input-containers")
-          input#email(type='text' value=email name='email' required)
+          input#email(type='text' value=email name='email' autocomplete="off" required)
         br
         label Password
         br
         div(class="input-containers")
-          input#password(type='password' name='password' required)     
+          input#password(type='password' name='password' autocomplete="off" required)     
         br
         div
         - const values = messages || [];
         -if(values.length)
-          ul#loginFeedbackList(style=style)
+          ul(class='feedbackList' style=style)
             each val in values
               li= val
         button#submitButton(styles='buttons')='Login'
+      br
       span
         p
           a(href='/register') Sign in
+        br
       span
         p 
           a(href='/forgetPassword.pug') Forget password
+      br
 
   script(src='/js/logInValidation.js')

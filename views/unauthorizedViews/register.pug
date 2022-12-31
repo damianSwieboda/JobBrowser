@@ -7,7 +7,7 @@ block content
       div(class="input-containers")
         label User name
         br
-        input#nameInput(type="text" name="name" required authocomplete="off" value=providedName style=`border: 2px solid ${nameInputBackgroundColor};`)
+        input#nameInput(type="text" name="name" required autocomplete="off" value=providedName style=`border: 2px solid ${nameInputBackgroundColor};`)
         br
         span(class="register-comments")
           p#nameComment Min 2 characters
@@ -15,7 +15,7 @@ block content
       div(class="input-containers")
         label Email
         br
-        input#emailInput(type="text" name="email" required authocomplete="off" value=providedEmail style=`border: 2px solid ${emailInputBackgroundColor};`)
+        input#emailInput(type="text" name="email" required autocomplete="off" value=providedEmail style=`border: 2px solid ${emailInputBackgroundColor};`)
         br
         span(class="register-comments")
           p#emailComment Provide correct email
@@ -23,30 +23,30 @@ block content
       div(class="input-containers")
         label Password
         br
-        input#passwordInput(type="password"  name="password" required authocomplete="off" style=`border: 2px solid ${passwordInputBackgroundColor};`)
+        input#passwordInput(type="password"  name="password" required autocomplete="off" style=`border: 2px solid ${passwordInputBackgroundColor};`)
         br
         span(class="register-comments")
-          p#passwordComment 8 characters; 1 uper and lowercase, special character, number
+          p#passwordComment 8 characters; one uper and lower, special character, number
 
       div(class="input-containers")
         label Repeat password
         br
-        input#repeatedPasswordInput(type="password"  name="secondPassword" required authocomplete="off" style=`border: 2px solid ${secondPasswordInputBackgroundColor};`)
+        input#repeatedPasswordInput(type="password"  name="secondPassword" required autocomplete="off" style=`border: 2px solid ${secondPasswordInputBackgroundColor};`)
         br
         span(class="register-comments")
           p#repeatedPasswordComment Repeated password does not match first password
-        br
-        
+        br        
         button#submitButton(styles="buttons") Login
     div
       - const values = messages || [];
       -if(values.length)
-        ul#signInFeedbackList(style=`${style}`)
+        ul(class='feedbackList' style=style)
           each val in values
             li= val
     span
       p 
         a(href='/forgetPassword.pug') Forget password
+    br
         
 
   script(src='/js/signInInputHints.js')

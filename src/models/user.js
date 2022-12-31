@@ -4,9 +4,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
 const { AuthError } = require('../routers/helpers/applicationError')
 
-
-
-const passwordValidationMessage = 'Password require min. 8 characters, at least one letter, number and special character'
+const passwordValidationMessage = 'Password require min. 8 characters; one uper and lowercase letter, special character and number'
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}/
 
 const userSchema = new mongoose.Schema({
@@ -59,12 +57,12 @@ userSchema.statics.findByCredentials = async function(email, password){
     const user = await User.findOne({ email })
 
     if(!user){
-        throw new AuthError('Wrong email, or password', 401)
+        throw new AuthError('Wrong email, or password', 403)
     }
 
     const isPasswordMatch = await bcrypt.compare(password, user.password)
     if(!isPasswordMatch){
-        throw new AuthError('Wrong email, or password', 401)
+        throw new AuthError('Wrong email, or password', 403)
     }
 
     return user

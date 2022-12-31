@@ -21,7 +21,7 @@ class AuthError extends ApplicationError {
     constructor(messages){
         super(messages || 'Not authorized', 401)
         this.messages = [messages]
-        this.status = 403
+        this.status = 401
     }
 }
 

@@ -1,7 +1,21 @@
-extends ../layout.pug 
+extends ../layout.pug
+
+mixin offerTemplate (offerData)
+  ul
+    li(class='dataContainer')
+      p#offerName=offerData.jobOffers[0].name
+      p#locations=offerData.jobOffers[0].locations
+      p#B2BSalary=offerData.jobOffers[0].B2Bsalary
+      p#contractSalary=offerData.jobOffers[0].contractSalary
+      p#skillsMustHave=offerData.jobOffers[0].skillsMustHave
 
 block content
-  #container
-    h2 Browse
-    p=jobOffer
+  h2 Browse
+  -const values = [fetchedOffers, fetchedOffers, fetchedOffers, fetchedOffers, fetchedOffers, fetchedOffers]
+  -if(values.length)
+    ul
+      each val in values
+        +offerTemplate(val)
+
   
+  script(src='/js/displayOffers.js')

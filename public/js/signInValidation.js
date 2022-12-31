@@ -21,7 +21,6 @@ document.addEventListener('click', ()=>{
 function switchOffAndOnFormButton() {
     if(isNameValid && isEmailValid && isPasswordValid && isRepeatedPasswordValid) {
         submitButton.removeAttribute('disabled')
-        console.log('removed')
     } else {
         submitButton.setAttribute('disabled', true)
     }
