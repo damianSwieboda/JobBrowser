@@ -1,0 +1,9 @@
+mixin item(title, url)
+  li
+    a(href=url class=path == url ? 'active' : '')=title 
+    
+nav
+    ul
+        +item('About', '/about')
+        +item('Login', '/')
+        +item('Sign in', '/register')

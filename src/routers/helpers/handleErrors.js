@@ -5,16 +5,16 @@ function handleValidationErrors(error, req, res){
     const providedName = req.body.name
 
    if(error.status === 400){
-        return res.status(error.status).render('unauthorizedViews/register', {isUnauthorizedView: true, providedName, providedEmail, ...error})
+        return res.status(error.status).render('unauthorizedViews/register', {providedName, providedEmail, ...error})
     }
 
     if(error.status === 403  || error.status === 401){
-        return res.status(403).render('unauthorizedViews/login', {isUnauthorizedView: true, providedEmail, ...error})
+        return res.status(403).render('unauthorizedViews/login', {providedEmail, ...error})
     }
 
     if(error.name === 'ValidationError'){
         const signInFeedback = convertDatabaseErrorToFeedback(error)
-        return res.status(400).render('unauthorizedViews/register', {isUnauthorizedView: true, providedEmail, providedName, ...signInFeedback})
+        return res.status(400).render('unauthorizedViews/register', {providedEmail, providedName, ...signInFeedback})
     }
 }
 

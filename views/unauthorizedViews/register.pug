@@ -1,6 +1,7 @@
 extends ../layout.pug
 
 block content
+  include ../includes/unauthorizedNav.pug
   #container
     h2 Sign in
     form(action="/register" method="post")

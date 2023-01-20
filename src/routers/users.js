@@ -4,13 +4,17 @@ const router = new express.Router()
 const User = require('../models/user')
 const { EmailIsInUseError } = require('./helpers/applicationError')
 const { handleValidationErrors } = require('./helpers/handleErrors')
+const { auth } = require('../middleware/auth')
+const { handleDisplayingViewDetails } = require('../middleware/handleDisplayingViewDetails')
 
-router.get('/', (req, res)=>{
-    res.render('unauthorizedViews/login', {isUnauthorizedView: true})
+
+
+router.get('/', auth, (req, res)=>{
+    res.render('unauthorizedViews/login')
 })
 
 router.get('/register', (req, res)=>{
-    res.render('unauthorizedViews/register', {isUnauthorizedView: true})
+    res.render('unauthorizedViews/register')
 })
 
 router.post('/register', async (req, res)=>{
@@ -21,7 +25,7 @@ router.post('/register', async (req, res)=>{
         user = new User(req.body)
         await user.save() 
 
-        res.render('unauthorizedViews/login', {isUnauthorizedView: true, messages: ['Succesfully Sign in!']})
+        res.render('unauthorizedViews/login', { messages: ['Succesfully Sign in!']})
     } catch(error){
         handleValidationErrors(error, req, res)
         res.status(500).send();
@@ -32,17 +36,16 @@ router.post('/login', async (req, res)=>{
     try{
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
-        res.cookie('token', token)
-        
-        res.redirect('/browse')
+        res.setHeader('Set-Cookie', `token=${token}; HttpOnly=true; SameSite=Lax; Path='/'; Secure`);
+        res.redirect('/browse');
     } catch(error){
         handleValidationErrors(error, req, res)
         res.status(500).send()
     }
-
 })
 
-router.get('/about', (req, res)=>{
-    res.render('about', {isUnauthorizedView: true})
+router.get('/about', handleDisplayingViewDetails, (req, res) =>{
+    console.log(req.renderUnauthorizedNavigation)
+    res.render('about', {isUnauthorizedView: req.renderUnauthorizedNavigation})
 })
 module.exports = router

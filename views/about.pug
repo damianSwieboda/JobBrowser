@@ -1,6 +1,10 @@
 extends layout.pug
 
 block content
+  -if(isUnauthorizedView)
+    include includes/unauthorizedNav.pug
+  -else 
+    include includes/authorizedNav.pug
   #container
     h2 About
     div#aboutImgContainer

@@ -16,19 +16,19 @@ html(lang='en')
   body
     header 
       h1='Job browser'
-    -if (isUnauthorizedView == true)
-      nav
-        ul
-          +item('About', '/about')
-          +item('Login', '/')
-          +item('Sign in', '/register')
-    -else 
-      nav
-        ul
-          +item('About', '/about')
-          +item('Browse', '/browse')
-          +item('Saved', '/saved')
-          +item('Omitted', '/omitted')
-          +item('Account', '/account')
+    //- -if (isUnauthorizedView == true)
+    //-   nav
+    //-     ul
+    //-       +item('About', '/about')
+    //-       +item('Login', '/')
+    //-       +item('Sign in', '/register')
+    //- -else 
+    //-   nav
+    //-     ul
+    //-       +item('About', '/about')
+    //-       +item('Browse', '/browse')
+    //-       +item('Saved', '/saved')
+    //-       +item('Omitted', '/omitted')
+    //-       +item('Account', '/account')
 
     block content
