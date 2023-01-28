@@ -8,12 +8,14 @@ const emailComment = document.querySelector('#emailComment')
 const passwordComment = document.querySelector('#passwordComment')
 const repeatedPasswordComment = document.querySelector('#repeatedPasswordComment')
 
+const form = document.querySelector('#registerForm')
 
-document.addEventListener('click', (event) => {   
-    displayErrorComment(nameInput, nameComment, isNameValid)
-    displayErrorComment(emailInput, emailComment, isEmailValid)
-    displayErrorComment(passwordInput, passwordComment, isPasswordValid)
-    displayErrorComment(repeatedPasswordInput, repeatedPasswordComment, isRepeatedPasswordValid)
+
+document.addEventListener('click', (event) => {
+    displayErrorComment(nameInput, nameComment, validations.name)
+    displayErrorComment(emailInput, emailComment, validations.email)
+    displayErrorComment(passwordInput, passwordComment, validations.password)
+    displayErrorComment(repeatedPasswordInput, repeatedPasswordComment, validations.repeatedPassword)
 });
 
 function displayErrorComment(input, inputComment, isError){

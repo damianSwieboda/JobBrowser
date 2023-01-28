@@ -12,12 +12,11 @@ const User = require('../models/user')
 
 router.get('/browse', auth, async (req, res) =>{
     try{
-        const fetchedOffers = await Offer.find({isNewOffer: true})
+        const fetchedOffers = await Offer.find({isNewOffer: true}, null, {limit: 5})
         res.render('authorizedViews/browse', {fetchedOffers})
     } catch(e){
         console.log(e.message)
     }
-
 } )
 
 

@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 
 const offerSchema = new mongoose.Schema({
     companyName: {type:String},
-    isNewOffer:{type:Boolean, default: true},
+    isNewOffer:{type:Boolean, default: true },
     offerName:{type:String},
     locations:{type:Array},
     seniority:{type:String},
@@ -24,9 +24,19 @@ const offerSchema = new mongoose.Schema({
     owner:{
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'Company'
+        ref: 'Company',
+    },
+},
+{
+    toObject: {
+      transform: function (doc, ret, game) {
+        delete ret.owner
+        delete ret.isNewOffer
+        delete ret.__v
+      }
     }
 })
+
 
 const Offer = mongoose.model("Offer", offerSchema)
 

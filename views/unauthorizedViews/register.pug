@@ -4,7 +4,7 @@ block content
   include ../includes/unauthorizedNav.pug
   #container
     h2 Sign in
-    form(action="/register" method="post")
+    form#registerForm(action="/register" method="post")
       div(class="input-containers")
         label User name
         br
@@ -36,8 +36,8 @@ block content
         br
         span(class="register-comments")
           p#repeatedPasswordComment Repeated password does not match first password
-        br        
-        button#submitButton(styles="buttons") Login
+        br      
+    button#submitButton(styles="buttons") Login          
     div
       - const values = messages || [];
       -if(values.length)

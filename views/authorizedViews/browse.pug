@@ -1,22 +1,39 @@
 extends ../layout.pug
 
-mixin offerTemplate (offerData)
-  ul
-    li(class='dataContainer')
-      p#offerName=offerData.name
-      p#locations=offerData.locations
-      p#B2BSalary=offerData.B2Bsalary
-      p#contractSalary=offerData.contractSalary
-      p#skillsMustHave=offerData.skillsMustHave
+mixin offerTemplate(offer)
+  li(class='dataContainer' data-offer-id=offer._id)
+    -const basicInformationsKeys=['offerName', 'companyName', 'locations', 'seniority', 'skillsMustHave']
+    -const unrenderedSalaries=['B2Bsalary', 'contractSalary', 'mandateContractSalary']
+    -for(let key in offer)
+      if key != '_id'
+        if(unrenderedSalaries.length ===3 && unrenderedSalaries.includes(key))
+          -unrenderedSalaries.splice(key, 1)            
+          p(id=key  style="display: inline-block" 'node' class=`x${offer._id}`)= offer[key].toString().replace(/,/g, ", ")
+        else if(basicInformationsKeys.indexOf(key) === -1)
+          p(id=key  style="display: none" 'node' class=`x${offer._id}`)= offer[key].toString().replace(/,/g, ", ")
+        else
+          p(id=key)= offer[key].toString().replace(/,/g, ", ")        
 
+    
 block content
   include ../includes/authorizedNav.pug
   h2 Browse
-  -const values = [fetchedOffers]
-  -if(values.length)
-    ul
-      each val in values
-        +offerTemplate(val)
-
-  
+  -const values = fetchedOffers
+  if values.length
+    ul#offersList
+      each offer in values
+        +offerTemplate(offer.toObject())
+  div#decisionPanel
+    div#offerContainer  
+    div#selectionPanel
+      button#backButton(class=`selectionButtons`)
+        img(src='/img/go-back-arrow.png')  
+      button#rejectButton(class=`selectionButtons`) 
+        img(src='/img/cross.png')
+      button#acceptButton(class=`selectionButtons`)
+        img(src='/img/love.png') 
+      button#closePanelButton(class=`selectionButtons`) 
+        img(src='/img/arrow.png')
+      
   script(src='/js/displayOffers.js')
+
