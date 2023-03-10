@@ -1,5 +1,4 @@
 const offersList = document.querySelector('#offersList')
-let arrayOfOffers = document.querySelectorAll('.dataContainer')
 const decisionPanel = document.querySelector('#decisionPanel')
 const offerContainer = document.querySelector('#offerContainer')
 
@@ -9,13 +8,6 @@ let idOfCurrentOffer
 let nextSiblingId;
 let previousSiblingId;
 
-function addEventListnersToOffers(){
-    arrayOfOffers.forEach(element =>{
-        element.addEventListener('click', (e) => openOffer(e)
-        )
-    })    
-}
-addEventListnersToOffers()
 
 function openOffer(e){
     const clickedOffer = e.target.closest('li');
@@ -102,13 +94,8 @@ function fetchOffersIfNearBottom() {
     if (!isFetching && distanceFromBottom < 100) {
         isFetching = true;
     
-        fetchOffers().then(() => {
-            arrayOfOffers = document.querySelectorAll('.dataContainer');
-
-            addEventListnersToOffers();
+        fetchAndRefreshOffers().then(() => {
             isFetching = false;
-            if(arrayOfOffers.length > 15) deleteOffersFrom('top');
-
         });
     };
 };
