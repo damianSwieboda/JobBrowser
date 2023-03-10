@@ -1,7 +1,7 @@
 extends ../layout.pug
 
 mixin offerTemplate(offer)
-  li(class='dataContainer' data-offer-id=offer._id)
+  li(class='dataContainer' id=offer._id data-offer-id=offer._id)
     -const basicInformationsKeys=['offerName', 'companyName', 'locations', 'seniority', 'skillsMustHave']
     -const unrenderedSalaries=['B2Bsalary', 'contractSalary', 'mandateContractSalary']
     -for(let key in offer)
@@ -17,23 +17,27 @@ mixin offerTemplate(offer)
     
 block content
   include ../includes/authorizedNav.pug
-  h2 Browse
+  h2=title
   -const values = fetchedOffers
   if values.length
     ul#offersList
       each offer in values
         +offerTemplate(offer.toObject())
   div#decisionPanel
-    div#offerContainer  
+    div#offerContainer
     div#selectionPanel
-      button#backButton(class=`selectionButtons`)
+      button#backOfferButton(class=`selectionButtons`)
         img(src='/img/go-back-arrow.png')  
-      button#rejectButton(class=`selectionButtons`) 
+      button#ommitOfferButton(class=`selectionButtons`) 
         img(src='/img/cross.png')
-      button#acceptButton(class=`selectionButtons`)
+      button#saveOfferButton(class=`selectionButtons`)
         img(src='/img/love.png') 
       button#closePanelButton(class=`selectionButtons`) 
         img(src='/img/arrow.png')
+    button#nextOfferButton >
+    button#previousOfferButton <
       
   script(src='/js/displayOffers.js')
+  script(src='/js/sendDataToServer.js')
+
 

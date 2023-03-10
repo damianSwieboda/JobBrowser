@@ -5,8 +5,5 @@ block content
     include includes/authorizedNav.pug
   -else 
     include includes/unauthorizedNav.pug
-  #container
-    h2 About
-    div#aboutImgContainer
-      img(src='/img/monke.png')
-    p Oga boga
+  h2 #{`Error - ${error.status}`}
+  h4=error.messages

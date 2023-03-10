@@ -1,5 +1,5 @@
 
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const offerSchema = new mongoose.Schema({
     companyName: {type:String},
@@ -35,9 +35,8 @@ const offerSchema = new mongoose.Schema({
         delete ret.__v
       }
     }
-})
+});
 
-
-const Offer = mongoose.model("Offer", offerSchema)
+const Offer = mongoose.model("Offer", offerSchema);
 
 module.exports = Offer

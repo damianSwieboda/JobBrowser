@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const companySchema = new mongoose.Schema({
     companyName: {
@@ -9,9 +9,9 @@ const companySchema = new mongoose.Schema({
     skills:{type:Array},
     methodology:{type:Array},
     perksInOfficeAndBenefits:{type:Array}
-})
+});
 
-const Company = mongoose.model("Company", companySchema)
+const Company = mongoose.model("Company", companySchema);
 
 module.exports = Company
 

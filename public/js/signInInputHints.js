@@ -12,13 +12,13 @@ const form = document.querySelector('#registerForm')
 
 
 document.addEventListener('click', (event) => {
-    displayErrorComment(nameInput, nameComment, validations.name)
-    displayErrorComment(emailInput, emailComment, validations.email)
-    displayErrorComment(passwordInput, passwordComment, validations.password)
-    displayErrorComment(repeatedPasswordInput, repeatedPasswordComment, validations.repeatedPassword)
+    displayErrorComment(nameInput, nameComment, isValid.name)
+    displayErrorComment(emailInput, emailComment, isValid.email)
+    displayErrorComment(passwordInput, passwordComment, isValid.password)
+    displayErrorComment(repeatedPasswordInput, repeatedPasswordComment, isValid.repeatedPassword)
 });
 
-function displayErrorComment(input, inputComment, isError){
+function displayErrorComment(input, inputComment, isValidValue){
 
     if (input.contains(event.target)) {
         inputComment.style.display = 'inline-block' 
@@ -26,7 +26,7 @@ function displayErrorComment(input, inputComment, isError){
         inputComment.style.display = 'none' 
     }
 
-    if(isError === false && input.contains(event.target) == false && input.value.length > 0){
+    if(isValidValue === false && input.contains(event.target) == false && input.value.length > 0){
         inputComment.style.display = 'inline-block' 
         inputComment.style.color = 'red'
         input.style.border= '2px solid red'

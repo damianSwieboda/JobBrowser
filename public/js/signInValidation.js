@@ -1,4 +1,4 @@
-let validations = {
+let isValid = {
   name: false,
   email: false,
   password: false,
@@ -7,14 +7,14 @@ let validations = {
 
 
 document.addEventListener('change', () => {
-  validations.name = validateName(nameInput.value)
-  validations.email = validateEmail(emailInput.value)
-  validations.password = validatePassword(passwordInput.value)
-  validations.repeatedPassword = repeatedPasswordValidation(passwordInput.value, repeatedPasswordInput.value)
+    isValid.name = validateName(nameInput.value)
+    isValid.email = validateEmail(emailInput.value)
+    isValid.password = validatePassword(passwordInput.value)
+    isValid.repeatedPassword = repeatedPasswordValidation(passwordInput.value, repeatedPasswordInput.value)
 })
 
 submitButton.addEventListener('click', ()=>{
-    if(Object.values(validations).every(v => v === true)) {
+    if(Object.values(isValid).every(v => v === true)) {
         form.submit()
     }
 })
@@ -48,8 +48,6 @@ function validatePassword(passwordValue) {
 }
 
 function repeatedPasswordValidation(firstPassword, repeatedPassword) {
-    console.log(firstPassword + " - "+ repeatedPassword)
-    console.log(firstPassword === repeatedPassword)
   if(firstPassword === repeatedPassword){
     return true
   } else {

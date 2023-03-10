@@ -1,4 +1,7 @@
 
+
+    /*      CONTAINERS      */
+
 #decisionPanel{
     position: fixed;
     display: none;
@@ -28,6 +31,41 @@
     padding-bottom: 20px;
 
 }
+
+
+
+    /*      BUTTONS     */
+
+#nextOfferButton{
+    color: #00b300;
+    position: absolute; 
+    right: 5px;
+    top:50vh;
+    width: 40px;
+    height: 40px;
+    border: 3px solid #00b300;
+    font-size: 1em;
+    background-color: transparent;
+    border-radius: 50%;
+
+}
+    
+#previousOfferButton{
+    color: #00b7ff;
+    position: absolute; 
+    left: 5px;
+    top:50vh;
+    width: 40px;
+    height: 40px;
+    border: 3px solid #00b7ff;
+    font-size: 1em;
+    background-color: transparent;
+    border-radius: 50%;
+
+
+
+}
+        
 #selectionPanel{
     display: flex;
     align-items: center;
@@ -48,20 +86,20 @@
     height: 70px;
 }
 
-#backButton, #closePanelButton{
+#backOfferButton, #closePanelButton{
 
     align-self:flex-start;
     width: 50px;
     height: 50px;
     
 }
-#backButton img{
+#backOfferButton img{
     width: 20px;
 }
 #closePanelButton img{
     width: 20px;
 }
-#rejectButton{
+#ommitOfferButton{
     width: 70px;
     height: 70px;
 }
@@ -71,23 +109,20 @@
     max-height: 100vh;
     margin-top: 5px;    
 }
-#acceptButton{
+#saveOfferButton{
     width: 70px;
     height: 70px;
 }
 
-/* li p{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-} */
 
 
+#offersList{
+    height: 100vh;
+    overflow: auto;
+}
 
+    /*      PARAGRAPHS IN MINI OFERT DISPLAY        */
 
-
-
-/* PARAGRAPHS IN MINI OFERT DISPLAY */
 #offersList li{
     position: relative;
 
@@ -150,7 +185,10 @@
     font-size: 1em;
 }
 
-/* PARAGRAPHS INSIDE THE OFFER*/
+
+
+    /*      PARAGRAPHS INSIDE THE OFFER     */
+
 #offerName {
     text-align: center;
     font-size: 1.5em;
@@ -235,25 +273,3 @@
 #jobDescription, #dailyTasks, #jobDetails, #equipmentSupplied, #methodology, #perksInOfficeAndBenefits {
     margin-bottom: 20px;
 }
-
-
-
-/*
-offerName,
-locations,
-seniority,
-B2Bsalary,
-B2Binformation,
-contractSalary,
-contractInformation,
-mandateContractSalary,
-mandateContractInformation,
-skillsMustHave,
-skillsNiceToHave,
-jobDescription,
-dailyTasks,
-jobDetails,
-equipmentSupplied,
-methodology,
-perksInOfficeAndBenefits
-*/
