@@ -31,7 +31,7 @@ function sendData(action) {
   if (offerContainer.children.length > 0) {
       offerId = offerContainer.children[0].getAttribute('data-offer-id');
   } else {
-     offerId = false;
+    offerId = false;
   }
 
   if(offerId){
@@ -51,8 +51,8 @@ function removeOffer(){
 
   if(nextSiblingId || previousSiblingId){
     if(focusedOffer){
-       focusedOffer.remove()
-       nextSiblingId ? loadOffer(nextSiblingId) : loadOffer(previousSiblingId)
+      focusedOffer.remove()
+      nextSiblingId ? loadOffer(nextSiblingId) : loadOffer(previousSiblingId)
     } 
   }
   if(!nextSiblingId && !previousSiblingId){

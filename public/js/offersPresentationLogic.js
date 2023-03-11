@@ -74,49 +74,71 @@ document.querySelector('#previousOfferButton').addEventListener('click', ()=>{
     }
 })
 
-const offersIdsRemovedFromTop=[];
-function deleteOffersFrom(direction){
-    if(direction==='top'){
-        const offers = Array.from(document.querySelectorAll('.dataContainer')).slice(0, 10)
-        offers.forEach(offer=>{
-            const idOfOfferToRemove = document.getElementById(offer.id)
+// const offersIdsRemovedFromTop=[];
+// function deleteOffersFrom(direction){
+//     if(direction==='top'){
+//         const offers = Array.from(document.querySelectorAll('.dataContainer')).slice(0, 10)
+//         offers.forEach(offer=>{
+//             const idOfOfferToRemove = document.getElementById(offer.id)
 
-            offersIdsRemovedFromTop.push(offer.id)
-            idOfOfferToRemove.parentNode.removeChild(idOfOfferToRemove)
-        })
-    }
-}
+//             offersIdsRemovedFromTop.push(offer.id)
+//             idOfOfferToRemove.parentNode.removeChild(idOfOfferToRemove)
+//         })
+//     }
+// }
+
+// let isFetching = false;
+// let previousDistanceFromBottom=0;
+// function fetchOffersIfNearBottom() {
+//     let distanceFromBottom = offersList.scrollHeight - offersList.scrollTop - offersList.clientHeight;
+
+//     if(previousDistanceFromBottom < distanceFromBottom){
+//         if (!isFetching && distanceFromBottom < 150) {
+//             isFetching = true;
+        
+//             fetchAndRefreshOffers('onBotton').then(() => {
+//                 isFetching = false;
+//             });
+//         };
+//     } else {
+//         if (!isFetching && distanceFromBottom > 150) {
+//             isFetching = true;
+//             fetchAndRefreshOffers('onTop').then(() => {
+//                 isFetching = false;
+//             });
+//         };
+//     }
+    
+//     previousDistanceFromBottom = distanceFromBottom
+// };
+// offersList.addEventListener('scroll', _.debounce(fetchOffersIfNearBottom, 250));
+
 
 let isFetching = false;
-function fetchOffersIfNearBottom() {
-    const distanceFromBottom = offersList.scrollHeight - offersList.scrollTop - offersList.clientHeight;
-    
-    if (!isFetching && distanceFromBottom < 100) {
+let lastScrollTop = 0;
+let tolerance = 150; //pixels from top or botton
+
+function fetchOffersIfNearTopOrBottom() {
+    let scrollTop = offersList.scrollTop;
+    let distanceFromBottom = offersList.scrollHeight - scrollTop - offersList.clientHeight;
+    let scrollDirection = scrollTop > lastScrollTop ? "down" : "up";
+
+    if (scrollDirection === "down" && !isFetching && distanceFromBottom < tolerance) {
         isFetching = true;
-    
-        fetchAndRefreshOffers().then(() => {
-            isFetching = false;
-        });
-    };
-};
-offersList.addEventListener('scroll', _.debounce(fetchOffersIfNearBottom, 250));
+        fetchAndRefreshOffers('onBottom').then(() => isFetching = false);
+    } 
+  
+    if (scrollDirection === "up" && !isFetching && scrollTop < tolerance) {
+        isFetching = true;
+        fetchAndRefreshOffers('onTop').then(() => isFetching = false);
+    }
 
-
-
-
-function styleSkills(){
-    const skillsInOffers = document.querySelectorAll('#skillsMustHave', '#skillsNiceToHave');
-    skillsInOffers.forEach(skillsMustHave=>{
-        const isStyled = skillsMustHave.querySelector('span');
-        
-        if(isStyled){
-            return;
-        }
-        createSkillSpans(skillsMustHave);
-        
-    })
+    lastScrollTop = scrollTop;
 }
-styleSkills();
+offersList.addEventListener('scroll', _.debounce(fetchOffersIfNearTopOrBottom, 250))
+
+
+
 
 function createSkillSpans(skillsMustHave){
     const skills = skillsMustHave.textContent.split(', ');

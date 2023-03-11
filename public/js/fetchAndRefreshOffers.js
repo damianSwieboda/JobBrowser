@@ -1,19 +1,19 @@
 
 const idsOfAllAlreadyFetchedOffers = [];
 const hiddenOffers = [];
+const amountOfoffersToFetchOrHide = 3
 
-async function fetchAndRefreshOffers() {
+async function fetchAndRefreshOffers(direction) {
   try {
     takeAlreadyFetchedOffers()
- 
-    const fetchedOffersData = await fetchOffers()
+    const fetchedOffersData = await fetchOffers(direction)
     const offers = await fetchedOffersData.json()
-    offers.forEach(offer=>{
-      generateOffer(offer); // this fn is in generateOffersFile file
+    offers.reverse().forEach(offer=>{
+      generateOffer(offer, direction); // this fn is in generateOffers  file
     })
 
     let arrayOfOffers = document.querySelectorAll('.dataContainer')
-    if(arrayOfOffers.length > 15) deleteOffersFrom('top');
+    if(arrayOfOffers.length > 12) deleteOffersFrom(direction);
 
     styleSkills()
     addEventListnersToOffers()
@@ -22,35 +22,67 @@ async function fetchAndRefreshOffers() {
   }
 }
 
-
+function styleSkills(){
+    const skillsInOffers = document.querySelectorAll('#skillsMustHave', '#skillsNiceToHave');
+    skillsInOffers.forEach(skillsMustHave=>{
+        const isStyled = skillsMustHave.querySelector('span');
+        
+        if(isStyled){
+            return;
+        }
+        createSkillSpans(skillsMustHave);
+        
+    })
+}
+styleSkills()
 function takeAlreadyFetchedOffers(){
     const generatedOffers = document.querySelectorAll('.dataContainer')
-    idsOfAllAlreadyFetchedOffers.push([...hiddenOffers])
+    if(hiddenOffers.length < 0) idsOfAllAlreadyFetchedOffers.push([...hiddenOffers])
     for (const offer of generatedOffers) {
         idsOfAllAlreadyFetchedOffers.push(offer.id);
     }  
 }
 
-async function fetchOffers(){
-    const response = await fetch('http://localhost:3000/browse/loadOffers', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ generatedOffersIdsJSON: idsOfAllAlreadyFetchedOffers })
-    });
-    return response;
-  }
+async function fetchOffers(direction){
+    let offersToFetch;
+    if(direction == 'onBottom') offersToFetch = idsOfAllAlreadyFetchedOffers
+    let lengthOfhiddenOffers = hiddenOffers.length
 
-function deleteOffersFrom(direction){
-    if(direction==='top'){
-        const offers = Array.from(document.querySelectorAll('.dataContainer')).slice(0, 10)
-        offers.forEach(offer=>{
-          const idOfOfferToRemove = document.getElementById(offer.id)
-
-          offersIdsRemovedFromTop.push(offer.id)
-          idOfOfferToRemove.parentNode.removeChild(idOfOfferToRemove)
-      })
-      return 
+    if(direction == 'onTop') offersToFetch = hiddenOffers.slice(lengthOfhiddenOffers-amountOfoffersToFetchOrHide, lengthOfhiddenOffers)
+    if(direction == 'onTop') {
+      console.log(hiddenOffers)
     }
+    const response = await fetch('http://localhost:3000/browse/loadOffers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ generatedOffersIdsJSON: offersToFetch, direction: direction })
+    })
+
+    if(direction == 'onTop') {
+      hiddenOffers.splice(-amountOfoffersToFetchOrHide)
+      console.log(hiddenOffers)
+    }
+    return response;
+}
+    
+function deleteOffersFrom(direction){
+    if(direction==='onBottom'){
+        const offers = Array.from(document.querySelectorAll('.dataContainer')).slice(0, amountOfoffersToFetchOrHide)
+        offers.forEach(offer=>{
+          const childToRemove = document.getElementById(offer.id)
+
+          hiddenOffers.push(offer.id)
+          childToRemove.parentNode.removeChild(childToRemove)
+      }) 
+    }
+    if(direction==='onTop'){
+      const offers = Array.from(document.querySelectorAll('.dataContainer')).slice(-amountOfoffersToFetchOrHide)
+      offers.forEach(offer=>{
+        const childToRemove = document.getElementById(offer.id)
+
+        childToRemove.parentNode.removeChild(childToRemove)
+    })
+  }
 }
 
 

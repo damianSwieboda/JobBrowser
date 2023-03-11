@@ -1,5 +1,5 @@
 
-function generateOffer(offer) {
+function generateOffer(offer, direction) {
     const basicInformationsKeys = ["offerName", "companyName", "locations", "seniority", "skillsMustHave"]
     const unrenderedSalaries = ["B2Bsalary", "contractSalary", "mandateContractSalary"]
   
@@ -15,10 +15,12 @@ function generateOffer(offer) {
         liElem.appendChild(paragraph);
       }
     }
-  
+    if(direction==='onTop'){
+      return offersList.insertBefore(liElem, offersList.firstChild)
+    }
     offersList.appendChild(liElem)
 }
-  
+
 
 
 function createParagraph(key, offer) {
