@@ -1,4 +1,4 @@
-const offersList = document.querySelector('#offersList')
+let offersList = document.querySelector('#offersList')
 const decisionPanel = document.querySelector('#decisionPanel')
 const offerContainer = document.querySelector('#offerContainer')
 
@@ -28,6 +28,7 @@ function loadOffer(IdOfofferToLoad){
         const clonedElements = focusedOffer.cloneNode(true)
         offerContainer.appendChild(clonedElements)
         getSiblings(focusedOffer)
+
         unfoldOffer()
     }
 
@@ -37,9 +38,15 @@ function loadOffer(IdOfofferToLoad){
 function getSiblings(focusedOffer){
     if(focusedOffer.nextElementSibling){
         nextSiblingId = focusedOffer.nextElementSibling.getAttribute('id')
+    } else {
+        nextSiblingId = false
     }
+
+
     if(focusedOffer.previousElementSibling){
         previousSiblingId = focusedOffer.previousElementSibling.getAttribute('id') 
+    } else {
+        previousSiblingId = false
     }
 }
 
@@ -62,57 +69,44 @@ document.querySelector('#closePanelButton').addEventListener('click', ()=>{
 
 document.querySelector('#nextOfferButton').addEventListener('click', ()=>{
     if(nextSiblingId){
+        
         offerContainer.innerHTML = ''
         loadOffer(nextSiblingId)
+    } else{
+        fetchAndRefreshOffers('onBottom')
+        .then(() => {
+            getSiblings(focusedOffer)
+            if(nextSiblingId){
+                offerContainer.innerHTML = ''
+            }
+        })
+        .then(() => {
+            loadOffer(nextSiblingId)
+        })
     }
+   
 })
 
+
+
+// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 document.querySelector('#previousOfferButton').addEventListener('click', ()=>{
     if(previousSiblingId){
         offerContainer.innerHTML = ''
         loadOffer(previousSiblingId)
+    } else {
+        fetchAndRefreshOffers('onTop')
+        .then(() => {
+            const listItem = offersList.childNodes[2]
+            getSiblings(listItem)
+            if(previousSiblingId) {
+                offerContainer.innerHTML = ''
+            }
+            loadOffer(previousSiblingId)
+        })
     }
+
 })
-
-// const offersIdsRemovedFromTop=[];
-// function deleteOffersFrom(direction){
-//     if(direction==='top'){
-//         const offers = Array.from(document.querySelectorAll('.dataContainer')).slice(0, 10)
-//         offers.forEach(offer=>{
-//             const idOfOfferToRemove = document.getElementById(offer.id)
-
-//             offersIdsRemovedFromTop.push(offer.id)
-//             idOfOfferToRemove.parentNode.removeChild(idOfOfferToRemove)
-//         })
-//     }
-// }
-
-// let isFetching = false;
-// let previousDistanceFromBottom=0;
-// function fetchOffersIfNearBottom() {
-//     let distanceFromBottom = offersList.scrollHeight - offersList.scrollTop - offersList.clientHeight;
-
-//     if(previousDistanceFromBottom < distanceFromBottom){
-//         if (!isFetching && distanceFromBottom < 150) {
-//             isFetching = true;
-        
-//             fetchAndRefreshOffers('onBotton').then(() => {
-//                 isFetching = false;
-//             });
-//         };
-//     } else {
-//         if (!isFetching && distanceFromBottom > 150) {
-//             isFetching = true;
-//             fetchAndRefreshOffers('onTop').then(() => {
-//                 isFetching = false;
-//             });
-//         };
-//     }
-    
-//     previousDistanceFromBottom = distanceFromBottom
-// };
-// offersList.addEventListener('scroll', _.debounce(fetchOffersIfNearBottom, 250));
-
 
 let isFetching = false;
 let lastScrollTop = 0;

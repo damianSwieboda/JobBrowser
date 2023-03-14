@@ -49,9 +49,7 @@ async function fetchOffers(direction){
     let lengthOfhiddenOffers = hiddenOffers.length
 
     if(direction == 'onTop') offersToFetch = hiddenOffers.slice(lengthOfhiddenOffers-amountOfoffersToFetchOrHide, lengthOfhiddenOffers)
-    if(direction == 'onTop') {
-      console.log(hiddenOffers)
-    }
+
     const response = await fetch('http://localhost:3000/browse/loadOffers', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -60,7 +58,6 @@ async function fetchOffers(direction){
 
     if(direction == 'onTop') {
       hiddenOffers.splice(-amountOfoffersToFetchOrHide)
-      console.log(hiddenOffers)
     }
     return response;
 }
@@ -89,7 +86,7 @@ function deleteOffersFrom(direction){
 function addEventListnersToOffers(){
     arrayOfOffers = document.querySelectorAll('.dataContainer')
     arrayOfOffers.forEach(element =>{
-        element.addEventListener('click', (e) => openOffer(e)
+        element.addEventListener('click', (e) => openOffer(e) // openOffer fn is in offersPresentationLogic file
         )
     })    
   }

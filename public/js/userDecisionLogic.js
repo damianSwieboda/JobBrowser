@@ -52,6 +52,7 @@ function removeOffer(){
   if(nextSiblingId || previousSiblingId){
     if(focusedOffer){
       focusedOffer.remove()
+      
       nextSiblingId ? loadOffer(nextSiblingId) : loadOffer(previousSiblingId)
     } 
   }
