@@ -6,7 +6,6 @@ function generateOffer(offer, direction) {
     const liElem = document.createElement("li")
     liElem.setAttribute("class", "dataContainer")
     liElem.setAttribute("id", offer._id)
-    liElem.setAttribute("data-offer-id", offer._id)
   
     for (let key in offer) {
       if (key !== "_id") {

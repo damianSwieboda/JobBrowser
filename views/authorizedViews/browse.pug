@@ -1,7 +1,7 @@
 extends ../layout.pug
 
 mixin offerTemplate(offer)
-  li(class='dataContainer' id=offer._id data-offer-id=offer._id)
+  li(class='dataContainer' id=offer._id)
     -const basicInformationsKeys=['offerName', 'companyName', 'locations', 'seniority', 'skillsMustHave']
     -const unrenderedSalaries=['B2Bsalary', 'contractSalary', 'mandateContractSalary']
     -for(let key in offer)

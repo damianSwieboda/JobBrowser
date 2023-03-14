@@ -29,7 +29,7 @@ backOfferButton.addEventListener('click', ()=>{
 function sendData(action) {
   let offerId;
   if (offerContainer.children.length > 0) {
-      offerId = offerContainer.children[0].getAttribute('data-offer-id');
+      offerId = offerContainer.children[0].getAttribute('cloned-id');
   } else {
     offerId = false;
   }

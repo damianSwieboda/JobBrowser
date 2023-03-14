@@ -18,6 +18,7 @@ function openOffer(e){
         isPanelOpen = true
 
         loadOffer(idOfClickedOffer)
+        
     }
 }
 
@@ -26,9 +27,11 @@ function loadOffer(IdOfofferToLoad){
     focusedOffer = document.getElementById(IdOfofferToLoad)
     if(focusedOffer){
         const clonedElements = focusedOffer.cloneNode(true)
+        clonedElements.removeAttribute('id')
+        clonedElements.setAttribute('cloned-id', IdOfofferToLoad)
+        
         offerContainer.appendChild(clonedElements)
         getSiblings(focusedOffer)
-
         unfoldOffer()
     }
 
@@ -56,6 +59,7 @@ function unfoldOffer(){
     for(paragraph of focusedOffersParagraphs){
         paragraph.style.display = 'block'
     }
+
 }
 
 
@@ -68,8 +72,7 @@ document.querySelector('#closePanelButton').addEventListener('click', ()=>{
 
 
 document.querySelector('#nextOfferButton').addEventListener('click', ()=>{
-    if(nextSiblingId){
-        
+    if(nextSiblingId){        
         offerContainer.innerHTML = ''
         loadOffer(nextSiblingId)
     } else{
@@ -89,7 +92,6 @@ document.querySelector('#nextOfferButton').addEventListener('click', ()=>{
 
 
 
-// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 document.querySelector('#previousOfferButton').addEventListener('click', ()=>{
     if(previousSiblingId){
         offerContainer.innerHTML = ''
@@ -97,8 +99,10 @@ document.querySelector('#previousOfferButton').addEventListener('click', ()=>{
     } else {
         fetchAndRefreshOffers('onTop')
         .then(() => {
-            const listItem = offersList.childNodes[2]
-            getSiblings(listItem)
+            const idOfDisplayedOffer = offerContainer.children[0].getAttribute('cloned-id')
+            focusedOffer = document.getElementById(idOfDisplayedOffer)
+
+            getSiblings(focusedOffer)
             if(previousSiblingId) {
                 offerContainer.innerHTML = ''
             }

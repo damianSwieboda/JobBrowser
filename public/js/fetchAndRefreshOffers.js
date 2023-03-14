@@ -18,25 +18,26 @@ async function fetchAndRefreshOffers(direction) {
     styleSkills()
     addEventListnersToOffers()
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
   }
 }
 
 function styleSkills(){
-    const skillsInOffers = document.querySelectorAll('#skillsMustHave', '#skillsNiceToHave');
-    skillsInOffers.forEach(skillsMustHave=>{
-        const isStyled = skillsMustHave.querySelector('span');
-        
-        if(isStyled){
-            return;
-        }
-        createSkillSpans(skillsMustHave);
-        
-    })
+  const skillsMusToHave = document.querySelectorAll('#skillsMustHave');
+  const skillsNiceToHave = document.querySelectorAll('#skillsNiceToHave');
+  skillsInOffers = [...skillsMusToHave, ...skillsNiceToHave]
+
+  skillsInOffers.forEach(skill =>{
+    const isStyled = skill.querySelector('span');
+    if(!isStyled){
+      createSkillSpans(skill);
+    }
+    
+  })
 }
 styleSkills()
 function takeAlreadyFetchedOffers(){
-    const generatedOffers = document.querySelectorAll('.dataContainer')
+    const generatedOffers = document.getElementById('offersList').querySelectorAll('.dataContainer')
     if(hiddenOffers.length < 0) idsOfAllAlreadyFetchedOffers.push([...hiddenOffers])
     for (const offer of generatedOffers) {
         idsOfAllAlreadyFetchedOffers.push(offer.id);
@@ -64,7 +65,7 @@ async function fetchOffers(direction){
     
 function deleteOffersFrom(direction){
     if(direction==='onBottom'){
-        const offers = Array.from(document.querySelectorAll('.dataContainer')).slice(0, amountOfoffersToFetchOrHide)
+        const offers = Array.from(document.getElementById('offersList').querySelectorAll('.dataContainer')).slice(0, amountOfoffersToFetchOrHide)
         offers.forEach(offer=>{
           const childToRemove = document.getElementById(offer.id)
 
@@ -73,7 +74,7 @@ function deleteOffersFrom(direction){
       }) 
     }
     if(direction==='onTop'){
-      const offers = Array.from(document.querySelectorAll('.dataContainer')).slice(-amountOfoffersToFetchOrHide)
+      const offers = Array.from(document.getElementById('offersList').querySelectorAll('.dataContainer')).slice(-amountOfoffersToFetchOrHide)
       offers.forEach(offer=>{
         const childToRemove = document.getElementById(offer.id)
 

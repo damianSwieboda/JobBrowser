@@ -44,7 +44,7 @@ router.post('/browse/loadOffers', auth, async (req, res, next) => {
         const arrOfIds = req.body.generatedOffersIdsJSON
         const direction = req.body.direction
         let offers;
-
+        console.log(arrOfIds)
         if(direction==='onTop'){
             offers = await Offer.find({ _id: { $in: arrOfIds }})
             return res.send(offers)
@@ -53,11 +53,12 @@ router.post('/browse/loadOffers', auth, async (req, res, next) => {
         const userChoices = await Choice.findOne({ owner: req.user._id }).select('saved ommited');
         const savedOffersIds = userChoices.saved;
         const ommitedOffersIds = userChoices.ommited;
- 
+
         offers = await Offer.find({ _id: { $nin: [...savedOffersIds, ...ommitedOffersIds, ...arrOfIds] } } ).limit(3);
     
         res.send(offers);
     } catch(e){
+        console.log(e.message)
         next(e);
     }
 });
