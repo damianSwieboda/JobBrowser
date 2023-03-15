@@ -4,6 +4,8 @@ const router = new express.Router();
 const { auth }= require('../middleware/auth');
 const fs = require('fs');
 
+const { getNewSavedOfferIds, sortFetchedOffers } = require('./helpers/sortOffersHelpers')
+
 const Offer = require('../models/offer');
 const Choice = require('../models/choices');
 const Company = require('../models/company');
@@ -13,8 +15,8 @@ const User = require('../models/user');
 router.get('/browse', auth, async (req, res, next) =>{
     try{
         const userChoice = await Choice.findOne({ owner: req.user._id }).select('saved ommited');
-        const savedOffersIds = userChoice.saved;
-        const ommitedOffersIds = userChoice.ommited;
+        const savedOffersIds = userChoice.saved.map(offerData => offerData.offerId.toString());
+        const ommitedOffersIds = userChoice.ommited.map(offerData => offerData.offerId.toString());
 
         const fetchedOffers = await Offer.find({ _id: { $nin: [...savedOffersIds, ...ommitedOffersIds] } } ).limit(10);
         
@@ -28,10 +30,14 @@ router.post('/browse', auth, async (req, res, next)=>{
     try{
         const { action, offerId } = req.body;
         const userId = req.user._id;
+        const timeStamp = Date.now()
 
         await Choice.findOneAndUpdate({owner: userId},
-            { $push: { [action]: offerId }
-        }).select('owner');
+            { $push: {
+                 [action]: {offerId, timeStamp} 
+                }
+            }
+        ).select('owner');
         res.status(200).send({ message: 'The request was successful' });
     } catch(e){
         next(e);
@@ -44,7 +50,7 @@ router.post('/browse/loadOffers', auth, async (req, res, next) => {
         const arrOfIds = req.body.generatedOffersIdsJSON
         const direction = req.body.direction
         let offers;
-        console.log(arrOfIds)
+
         if(direction==='onTop'){
             offers = await Offer.find({ _id: { $in: arrOfIds }})
             return res.send(offers)
@@ -58,17 +64,17 @@ router.post('/browse/loadOffers', auth, async (req, res, next) => {
     
         res.send(offers);
     } catch(e){
-        console.log(e.message)
         next(e);
     }
 });
 router.get('/saved', auth, async (req, res, next)=>{
     try{
-        const savedOffersIds = (await Choice.findOne({owner: req.user._id}).select('saved')).saved;        
-        
-        const fetchedOffers = await Offer.find({ _id: { $in: savedOffersIds } } );
-    
-        res.render('authorizedViews/browse', { fetchedOffers, title: 'Saved' });
+        const savedOffers = (await Choice.findOne({owner: req.user._id}).select('saved')).saved;
+        const latestSavedOffersIds = getNewSavedOfferIds(savedOffers)
+        const fetchedOffers = await Offer.find({ _id: { $in: latestSavedOffersIds } } );
+        const sortedFetchedOffers = sortFetchedOffers(latestSavedOffersIds, fetchedOffers)
+
+        res.render('authorizedViews/browse', { fetchedOffers: sortedFetchedOffers, title: 'Saved' });
     } catch(e){
         next(e);
     }
@@ -76,9 +82,12 @@ router.get('/saved', auth, async (req, res, next)=>{
 
 router.get('/omitted', auth, async (req, res, next)=>{
     try{
-        const ommitedOffersIds = (await Choice.findOne({owner: req.user._id}).select('ommited')).ommited;
-        const fetchedOffers = await Offer.find({_id: { $in: ommitedOffersIds } } );
-        res.render('authorizedViews/browse', { fetchedOffers, title: 'Ommited'});
+        const ommitedOffers = (await Choice.findOne({owner: req.user._id}).select('ommited')).ommited;
+        const latesOmittedOffersIds = getNewSavedOfferIds(ommitedOffers)
+        const fetchedOffers = await Offer.find({_id: { $in: latesOmittedOffersIds } } );
+        const sortedFetchedOffers = sortFetchedOffers(latesOmittedOffersIds, fetchedOffers)
+
+        res.render('authorizedViews/browse', { fetchedOffers: sortedFetchedOffers, title: 'Ommited'});
     } catch(e){
         next(e);
     }

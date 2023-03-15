@@ -133,7 +133,9 @@ function fetchOffersIfNearTopOrBottom() {
 
     lastScrollTop = scrollTop;
 }
-offersList.addEventListener('scroll', _.debounce(fetchOffersIfNearTopOrBottom, 250))
+
+if(offersList) offersList.addEventListener('scroll', _.debounce(fetchOffersIfNearTopOrBottom, 250))
+
 
 
 

@@ -6,11 +6,25 @@ const choicesSchema = new mongoose.Schema({
         required: true,
     },
     saved:[{
-        type: mongoose.Schema.Types.ObjectId
+        offerId:{
+            type: mongoose.Schema.Types.ObjectId,
+            required: true
+        },
+        timeStamp:{
+            type: Number,
+            required: true
+        }
     }],
     ommited:[{
-        type: mongoose.Schema.Types.ObjectId
-    }]
+        offerId:{
+            type: mongoose.Schema.Types.ObjectId,
+            required: true
+        },
+        timeStamp:{
+            type: Number,
+            required: true
+        }
+    }],
 });
 
 const Choices =  mongoose.model('Choices', choicesSchema);

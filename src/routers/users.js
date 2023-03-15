@@ -38,7 +38,7 @@ router.post('/login', async (req, res, next)=>{
     try{
         const user = await User.findByCredentials(req.body.email, req.body.password);
         const token = await user.generateAuthToken();
-        res.setHeader('Set-Cookie', `token=${token}; HttpOnly=true; SameSite=Lax; Path='/'; Secure`);
+        await res.setHeader('Set-Cookie', `token=${token}; HttpOnly=true; SameSite=Lax; Path='/'; Secure`); //await 
         res.redirect('/browse');
     } catch(e){
         next(e);
@@ -64,3 +64,4 @@ router.get('/about', async (req, res, next) =>{
 })
 
 module.exports = router
+//i have app that user have list of jobs, he can save, or ommit offer. When he make decision request is made to server, and then id of offer is saved in another document that contains two arrays: saved and ommited, those arrays contains ids. Every user has his own decision document. If user saved offer, then Id is in this document in array saved. I have another view in my app, that user can display saved offer, and another for ommited. When offers are fetched, for example to ommited view, then servers fetch 10 offers, and rest will be fetched if client scroll down, but those fetched offers are taken from database in order from lates to newest - and i want to display recently ommited offers on top of ommited view.
