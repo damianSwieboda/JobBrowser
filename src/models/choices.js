@@ -15,7 +15,7 @@ const choicesSchema = new mongoose.Schema({
             required: true
         }
     }],
-    ommited:[{
+    omitted:[{
         offerId:{
             type: mongoose.Schema.Types.ObjectId,
             required: true

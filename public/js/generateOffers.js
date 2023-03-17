@@ -17,6 +17,9 @@ function generateOffer(offer, direction) {
     if(direction==='onTop'){
       return offersList.insertBefore(liElem, offersList.firstChild)
     }
+    if(direction==='back'){
+      return offersList.insertBefore(liElem, focusedOffer)
+    }
     offersList.appendChild(liElem)
 }
 

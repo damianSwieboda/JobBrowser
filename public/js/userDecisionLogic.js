@@ -1,32 +1,6 @@
-const saveButton = document.querySelector('#saveOfferButton')
-const ommitButton = document.querySelector('#ommitOfferButton')
-const backOfferButton = document.querySelector('#backOfferButton')
 const generatedOffers = document.querySelectorAll('.dataContainer')
 
-saveButton.addEventListener('click', ()=>{
-    sendData('saved')
-    removeOffer()
-
-    if(generatedOffers.length < 5){
-      fetchAndRefreshOffers()
-    } 
-})
-
-
-ommitButton.addEventListener('click', ()=>{
-    sendData('ommited')
-    removeOffer()
-
-    if(generatedOffers.length < 5){
-      fetchAndRefreshOffers()
-    } 
-})
-
-backOfferButton.addEventListener('click', ()=>{
-    sendData('back')
-})
-
-function sendData(action) {
+async function sendData(action) {
   let offerId;
   if (offerContainer.children.length > 0) {
       offerId = offerContainer.children[0].getAttribute('cloned-id');
@@ -35,12 +9,28 @@ function sendData(action) {
   }
 
   if(offerId){
-    fetch(`http://localhost:3000/browse`, {
+    await fetch(`http://localhost:3000/browse`, {
       method: 'POST',
         body: JSON.stringify({action, offerId}),
         headers:{ 'Content-Type': 'application/json' }
     })
-    .then(res=>res)
+    .then(res=>res.json())
+    .then(data =>{
+      generateOffer(data[0], 'back')
+      styleSkills()
+      addEventListnersToOffers()
+    } )
+    .then(() => {
+
+
+      getSiblings(focusedOffer)
+      if(nextSiblingId){
+          offerContainer.innerText = ''
+      }
+  })
+  .then(() => {
+      loadOffer(previousSiblingId)
+  })
     .catch(e=>console.log(e))
     }
 }

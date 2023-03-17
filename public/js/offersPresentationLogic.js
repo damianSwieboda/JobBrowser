@@ -4,7 +4,6 @@ const offerContainer = document.querySelector('#offerContainer')
 
 let isPanelOpen = false;
 let focusedOffer;
-let idOfCurrentOffer
 let nextSiblingId;
 let previousSiblingId;
 
@@ -61,56 +60,6 @@ function unfoldOffer(){
     }
 
 }
-
-
-
-document.querySelector('#closePanelButton').addEventListener('click', ()=>{
-    decisionPanel.style.display='none'
-    offerContainer.innerHTML=''
-    isPanelOpen = false
-})
-
-
-document.querySelector('#nextOfferButton').addEventListener('click', ()=>{
-    if(nextSiblingId){        
-        offerContainer.innerHTML = ''
-        loadOffer(nextSiblingId)
-    } else{
-        fetchAndRefreshOffers('onBottom')
-        .then(() => {
-            getSiblings(focusedOffer)
-            if(nextSiblingId){
-                offerContainer.innerHTML = ''
-            }
-        })
-        .then(() => {
-            loadOffer(nextSiblingId)
-        })
-    }
-   
-})
-
-
-
-document.querySelector('#previousOfferButton').addEventListener('click', ()=>{
-    if(previousSiblingId){
-        offerContainer.innerHTML = ''
-        loadOffer(previousSiblingId)
-    } else {
-        fetchAndRefreshOffers('onTop')
-        .then(() => {
-            const idOfDisplayedOffer = offerContainer.children[0].getAttribute('cloned-id')
-            focusedOffer = document.getElementById(idOfDisplayedOffer)
-
-            getSiblings(focusedOffer)
-            if(previousSiblingId) {
-                offerContainer.innerHTML = ''
-            }
-            loadOffer(previousSiblingId)
-        })
-    }
-
-})
 
 let isFetching = false;
 let lastScrollTop = 0;
